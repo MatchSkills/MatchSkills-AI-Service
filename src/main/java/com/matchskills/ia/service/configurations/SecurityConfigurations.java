@@ -33,6 +33,7 @@ public class SecurityConfigurations {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/ai/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/jobposting/**").permitAll()
                         .anyRequest().authenticated()
