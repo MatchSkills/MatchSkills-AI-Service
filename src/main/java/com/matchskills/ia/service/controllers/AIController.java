@@ -1,12 +1,14 @@
 package com.matchskills.ia.service.controllers;
 
-import com.matchskills.ia.service.dtos.ExtractHardskillsRequest;
-import com.matchskills.ia.service.dtos.ExtractHardskillsResponse;
+import com.matchskills.ia.service.dtos.*;
+import com.matchskills.ia.service.entitys.SoftskillEntity;
 import com.matchskills.ia.service.services.AIService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/ai")
@@ -18,12 +20,13 @@ public class AIController {
     @PostMapping("/extract-hardskills")
     public ExtractHardskillsResponse extractHardskills(@RequestBody ExtractHardskillsRequest extractHardskillsRequest) throws MalformedURLException {
 
-        return service.extractHardskills(extractHardskillsRequest.getCurriculum_url());
+        return service.extractHardskills(extractHardskillsRequest.getCurriculumUrl());
     }
 
-    @GetMapping
-    public String test(){
-        return service.test();
+    @PostMapping("/extract-softskills")
+    public String extractSoftSkills(@RequestBody ExtractSoftskillsRequest extractSoftskillsRequest) throws IOException {
+
+        return service.generateSoftSkillResults(extractSoftskillsRequest);
     }
 
 }
