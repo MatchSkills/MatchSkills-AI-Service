@@ -25,10 +25,9 @@ public class AIController {
         return service.extractHardskills(extractHardskillsRequest.getCurriculumUrl());
     }
 
-    @PostMapping("/extract-softskills")
+    @GetMapping("/extract-softskills")
     @PreAuthorize("hasRole('SYSTEM')")
-    public String extractSoftSkills(@RequestBody ExtractSoftskillsRequest extractSoftskillsRequest) throws IOException {
-
+    public ExtractSoftskillsResponse extractSoftSkills(@RequestBody ExtractSoftskillsRequest extractSoftskillsRequest) throws IOException {
         return service.generateSoftSkillResults(extractSoftskillsRequest);
     }
 
