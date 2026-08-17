@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @Getter
 @Setter
 public class ExtractSoftskillsResponse {
 
-    private List<ResultsSoftSkills> results;
+    private Map<String, Integer> results;
 
 }
 
