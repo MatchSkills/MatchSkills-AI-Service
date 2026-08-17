@@ -32,12 +32,8 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-//                        .requestMatchers("/").permitAll()
-//                        .requestMatchers("/ai/**").permitAll()
-//                        .requestMatchers("/h2-console/**").permitAll()
-//                        .requestMatchers("/jobposting/**").permitAll()
-//                        .anyRequest().authenticated()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
