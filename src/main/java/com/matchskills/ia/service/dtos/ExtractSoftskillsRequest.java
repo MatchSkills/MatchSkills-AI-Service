@@ -12,7 +12,7 @@ import java.util.Map;
 @Setter
 public class ExtractSoftskillsRequest {
 
-    private Long jobpostingId;
+    private Long jobPostingId;
     private List<Map<String, String>> questionsAndAnswers;
 
 }

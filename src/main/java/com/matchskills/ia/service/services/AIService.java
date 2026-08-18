@@ -65,7 +65,7 @@ public class AIService {
                 StandardCharsets.UTF_8
         );
 
-        var targetSoftSkills = jobPostingRepository.findById(extractSoftskillsRequest.getJobpostingId())
+        var targetSoftSkills = jobPostingRepository.findById(extractSoftskillsRequest.getJobPostingId())
                 .orElseThrow(JobPostingNotFoundException::new);
 
         var targetSoftskillsSet = targetSoftSkills.getTargetSoftskills().keySet();
