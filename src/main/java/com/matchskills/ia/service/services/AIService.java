@@ -19,6 +19,8 @@ import org.springframework.util.MimeTypeUtils;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -28,28 +30,33 @@ public class AIService {
 
     final private SoftskillRepository softskillRepository;
     final private ChatClient chatClient;
-    final private String extractPrompt;
-    final private Resource resultsPrompt;
+    final private String extractPromptPath;
+    final private String resultsPromptPath;
     final private JobPostingRepository jobPostingRepository;
 
     public AIService(ChatClient.Builder builder,
-                     @Value("${extract.hardskills.prompt.file}") String extractPrompt,
-                     @Value("${get.softskills.prompt.file}") Resource resultsPrompt,
+                     @Value("${extract.hardskills.prompt.file}") String extractPromptPath,
+                     @Value("${get.softskills.prompt.file}") String resultsPromptPath,
                      SoftskillRepository softskillRepository,
                      JobPostingRepository jobPostingRepository
     ) {
         this.chatClient = builder.build();
-        this.resultsPrompt = resultsPrompt;
-        this.extractPrompt = extractPrompt;
+        this.resultsPromptPath = resultsPromptPath;
+        this.extractPromptPath = extractPromptPath;
         this.softskillRepository = softskillRepository;
         this.jobPostingRepository = jobPostingRepository;
     }
 
-    public ExtractHardskillsResponse extractHardskills(String curriculumUrl) throws MalformedURLException {
+    public ExtractHardskillsResponse extractHardskills(String curriculumUrl) throws IOException {
 
         log.atInfo().log("Recebido url");
         Resource resource = new UrlResource(curriculumUrl);
         log.atInfo().log("gerado arquivo");
+
+        String extractPrompt = Files.readString(
+                Paths.get(extractPromptPath),
+                StandardCharsets.UTF_8
+        );
 
         log.atInfo().log("gerando resultado com ia");
         return chatClient.prompt()
@@ -65,8 +72,8 @@ public class AIService {
             ExtractSoftskillsRequest extractSoftskillsRequest
     ) throws IOException {
 
-        String prompt = new String(
-                resultsPrompt.getInputStream().readAllBytes(),
+        String prompt = Files.readString(
+                Paths.get(resultsPromptPath),
                 StandardCharsets.UTF_8
         );
 
