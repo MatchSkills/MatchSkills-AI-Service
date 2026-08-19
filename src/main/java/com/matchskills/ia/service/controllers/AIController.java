@@ -20,7 +20,7 @@ public class AIController {
 
     @PostMapping("/extract-hardskills")
     @PreAuthorize("hasRole('SYSTEM')")
-    public ExtractHardskillsResponse extractHardskills(@RequestBody ExtractHardskillsRequest extractHardskillsRequest) throws MalformedURLException {
+    public ExtractHardskillsResponse extractHardskills(@RequestBody ExtractHardskillsRequest extractHardskillsRequest) throws IOException {
 
         return service.extractHardskills(extractHardskillsRequest.getCurriculumUrl());
     }
