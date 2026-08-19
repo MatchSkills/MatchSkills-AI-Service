@@ -8,6 +8,7 @@ import com.matchskills.ia.service.entitys.AnchorEntity;
 import com.matchskills.ia.service.exceptions.customs.jobposting.JobPostingNotFoundException;
 import com.matchskills.ia.service.repositorys.JobPostingRepository;
 import com.matchskills.ia.service.repositorys.SoftskillRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -21,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class AIService {
 
@@ -45,8 +47,11 @@ public class AIService {
 
     public ExtractHardskillsResponse extractHardskills(String curriculumUrl) throws MalformedURLException {
 
+        log.atInfo().log("Recebido url");
         Resource resource = new UrlResource(curriculumUrl);
+        log.atInfo().log("gerado arquivo");
 
+        log.atInfo().log("gerando resultado com ia");
         return chatClient.prompt()
                 .user(u -> u
                         .text(extractPrompt)
